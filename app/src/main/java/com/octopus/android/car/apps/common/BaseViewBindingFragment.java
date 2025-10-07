@@ -9,13 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewbinding.ViewBinding;
 
-import com.car.ipc.Connection;
-import com.zhuchao.android.session.MApplication;
 import com.zhuchao.android.session.base.BaseFragment;
 
-public abstract class BaseViewBindingFragment<T extends ViewBinding> extends BaseFragment implements Connection.OnCallbackListener {
+public abstract class BaseViewBindingFragment<T extends ViewBinding> extends BaseFragment {
     protected T binding;
-    protected Connection connection = new Connection(this);
+    //protected Connection connection = new Connection(this);
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -34,14 +32,14 @@ public abstract class BaseViewBindingFragment<T extends ViewBinding> extends Bas
     public void onResume() {
         super.onResume();
         //创建远程IPC连接
-        connection.connect(MApplication.getAppContext());
+        //connection.connect(MApplication.getAppContext());
     }
 
     @Override
     public void onPause() {
         super.onPause();
         //断开IPC连接
-        connection.disconnect(MApplication.getAppContext());
+        //connection.disconnect(MApplication.getAppContext());
     }
 
     @Override

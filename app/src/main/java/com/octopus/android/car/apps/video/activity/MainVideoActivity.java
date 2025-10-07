@@ -23,10 +23,10 @@ public class MainVideoActivity extends BaseActivity implements View.OnClickListe
     private final SDItemFragment mSDItemFragment = new SDItemFragment();
     private final USBItemFragment mUSBItemFragment = new USBItemFragment();
     private final FolderItemFragment mFolderItemFragment = new FolderItemFragment();
-    ///private FrameLayout mFrameViewPlayList;
-    ///private FrameLayout mFrameViewSD;
-    ///private FrameLayout mFrameViewUSB;
-    ///private FrameLayout mFrameViewFolder;
+    /// private FrameLayout mFrameViewPlayList;
+    /// private FrameLayout mFrameViewSD;
+    /// private FrameLayout mFrameViewUSB;
+    /// private FrameLayout mFrameViewFolder;
     private ActivityVideoMainBinding binding;
 
     @Override

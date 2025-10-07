@@ -21,13 +21,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyCarApps"
         tools:targetApi="31">
+        <activity
+            android:name=".FullscreenMainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="true"
+            android:label="@string/title_activity_fullscreen_main"
+            android:theme="@style/Theme.MyCarApps.Fullscreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".video.activity.MainVideoActivity"
             android:exported="false"
             android:taskAffinity="three.affinity" />
+
         <activity-alias
-            android:name="MainVideoActivity"
+            android:name=".MainVideoActivity"
             android:exported="true"
             android:icon="@mipmap/ic_video_logo"
             android:label="@string/title_activity_video"
@@ -53,21 +65,49 @@
             android:exported="false"
             android:taskAffinity="four.affinity"
             android:windowSoftInputMode="adjustPan" />
+
+        <activity-alias
+            android:name=".BluetoothHomeActivity"
+            android:exported="true"
+            android:icon="@mipmap/ic_bt"
+            android:label="@string/title_activity_bluetooth"
+            android:targetActivity=".bluetooth.BluetoothHomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
         <activity
             android:name=".radio.RadioActivity"
             android:exported="false"
             android:taskAffinity="second.affinity" />
+
+        <activity-alias
+            android:name=".RadioActivity"
+            android:exported="true"
+            android:icon="@mipmap/fm_radio_icon"
+            android:label="@string/title_activity_radio"
+            android:targetActivity=".radio.RadioActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
         <activity
             android:name=".equalizer.EqualizerHomeActivity"
             android:exported="false"
             android:taskAffinity="five.affinity" />
 
         <activity-alias
-            android:name="RadioActivity"
+            android:name=".EqualizerHomeActivity"
             android:exported="true"
-            android:icon="@mipmap/fm_radio_icon"
-            android:label="@string/title_activity_radio"
-            android:targetActivity=".radio.RadioActivity">
+            android:icon="@mipmap/eq_logo"
+            android:label="@string/title_activity_eq"
+            android:targetActivity=".equalizer.EqualizerHomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -86,31 +126,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity-alias
-            android:name="BluetoothHomeActivity"
-            android:exported="true"
-            android:icon="@mipmap/ic_bt"
-            android:label="@string/title_activity_bluetooth"
-            android:targetActivity=".bluetooth.BluetoothHomeActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity-alias>
-        <activity-alias
-            android:name="EqualizerHomeActivity"
-            android:exported="true"
-            android:icon="@mipmap/eq_logo"
-            android:label="@string/title_activity_eq"
-            android:targetActivity=".equalizer.EqualizerHomeActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity-alias>
     </application>
 
 </manifest>

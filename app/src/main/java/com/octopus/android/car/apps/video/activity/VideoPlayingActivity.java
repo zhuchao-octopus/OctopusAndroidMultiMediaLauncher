@@ -206,7 +206,7 @@ public class VideoPlayingActivity extends BaseActivity implements PlayerCallback
             else mImageViewPlayPause.setImageResource(R.drawable.selector_stop);
         } else if (v.getId() == R.id.ivEq) {
             Cabinet.getPlayManager().stopPlay();
-            openLocalActivity(EqualizerHomeActivity.class);
+            startLocalActivity(EqualizerHomeActivity.class);
         }
     }
 

@@ -117,7 +117,8 @@ public class AlbumsItemFragment extends BaseFragment implements CommonItemRecycl
             ///holder.mImageViewTitle.setImageBitmap(AudioMetaFile.);
             holder.mTextViewTitle.setText(((MediaMetadata) item).getAlbum() + " (" + ((MediaMetadata) item).getCount() + ")");
             holder.mTextViewSubTitle.setText(((MediaMetadata) holder.mItem).getDescription());
-            if (((MediaMetadata) item).getBitmap() != null) holder.mImageViewTitle.setImageBitmap(((MediaMetadata) item).getBitmap());
+            if (((MediaMetadata) item).getBitmap() != null)
+                holder.mImageViewTitle.setImageBitmap(((MediaMetadata) item).getBitmap());
             else holder.mImageViewTitle.setImageResource(R.mipmap.ic_albums);
         } else if (item instanceof OMedia) {
             holder.mTextViewTitle.setText(((OMedia) item).getName());

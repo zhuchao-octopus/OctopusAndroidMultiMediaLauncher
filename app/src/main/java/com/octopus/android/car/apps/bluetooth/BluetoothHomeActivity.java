@@ -17,10 +17,10 @@ public class BluetoothHomeActivity extends BaseActivity implements View.OnClickL
     private final BluetoothSettingFragment bluetoothSettingFragment = new BluetoothSettingFragment();
     private final BluetoothPairFragment bluetoothPairFragment = new BluetoothPairFragment();
     private final BluetoothMusicFragment bluetoothMusicFragment = new BluetoothMusicFragment();
-    ///private FrameLayout mFrameViewPlayList;
-    ///private FrameLayout mFrameViewSD;
-    ///private FrameLayout mFrameViewUSB;
-    ///private FrameLayout mFrameViewFolder;
+    /// private FrameLayout mFrameViewPlayList;
+    /// private FrameLayout mFrameViewSD;
+    /// private FrameLayout mFrameViewUSB;
+    /// private FrameLayout mFrameViewFolder;
     private FragmentBluetoothHomeBinding binding;
 
     @Override

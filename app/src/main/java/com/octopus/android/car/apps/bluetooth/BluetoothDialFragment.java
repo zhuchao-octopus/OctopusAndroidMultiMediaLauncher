@@ -1,8 +1,7 @@
 package com.octopus.android.car.apps.bluetooth;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.os.RemoteException;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -11,11 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatSeekBar;
 
-import com.car.api.ApiBt;
-import com.car.api.ApiSound;
-import com.car.api.CarService;
-import com.car.ipc.ICallback;
-import com.car.ipc.IRemote;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.octopus.android.car.apps.R;
@@ -33,27 +27,7 @@ public class BluetoothDialFragment extends BaseViewBindingFragment<FragmentBluet
     }
 
     public static String getPhoneStateString(int state) {
-        switch (state) {
-            //已断开
-            case ApiBt.PHONE_STATE_DISCONNECTED:
-                return "";
-            //连接中
-            case ApiBt.PHONE_STATE_LINK:
-                return "";
-            //已连接
-            case ApiBt.PHONE_STATE_CONNECTED:
-                return "";
-            case ApiBt.PHONE_STATE_DIAL:
-                return "拨号中";
-            case ApiBt.PHONE_STATE_RING:
-                return "响铃中/来电";
-            case ApiBt.PHONE_STATE_TALK:
-                return "通话中";
-            //配对中
-            case ApiBt.PHONE_STATE_PAIR:
-                return "";
-        }
-        return "未知";
+        return null;
     }
 
     @Override
@@ -124,14 +98,10 @@ public class BluetoothDialFragment extends BaseViewBindingFragment<FragmentBluet
             binding.tvPhoneNumber.setText(number);
         } else if (v.getId() == R.id.viewCall) {
             //拨打电话
-            ApiBt.dial(binding.tvPhoneNumber.getText().toString());
         } else if (v.getId() == R.id.viewHung) {
             //挂断电话
-            ApiBt.hang();
-        } else if (v.getId() == R.id.viewVoice) {
-            //音量调节
-            //            showDialog();
-            CarService.me().cmd(ApiSound.CMD_VOL, ApiSound.VOL_SHOW_UI);
+        } else {
+            v.getId();//音量调节
         }
 
     }
@@ -141,7 +111,7 @@ public class BluetoothDialFragment extends BaseViewBindingFragment<FragmentBluet
         TextView volTv = dialogView.findViewById(R.id.vol_tv);
         AppCompatSeekBar appCompatSeekBar = dialogView.findViewById(R.id.vol_dial);
         // 创建BottomSheetDialog
-        BottomSheetDialog dialog = new BottomSheetDialog(getActivity());
+        BottomSheetDialog dialog = new BottomSheetDialog(requireActivity());
 
         // 设置布局到弹框
         dialog.setContentView(dialogView);
@@ -149,6 +119,7 @@ public class BluetoothDialFragment extends BaseViewBindingFragment<FragmentBluet
         // 显示弹框
         dialog.show();
         appCompatSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 volTv.setText(progress + "");
@@ -166,34 +137,4 @@ public class BluetoothDialFragment extends BaseViewBindingFragment<FragmentBluet
         });
     }
 
-    @Override
-    public void onConnected(IRemote iRemote, ICallback iCallback) throws RemoteException {
-        iRemote.register(new String[]{
-                //注册想要监听是数据，true代表马上返回需要的值
-                ApiBt.UPDATE_PHONE_STATE,//蓝牙状态
-        }, iCallback, true);
-    }
-
-    @Override
-    public void onUpdate(Bundle params) {
-        if (binding == null) {
-            return;
-        }
-        if (params == null) return;
-        String id = params.getString("id");
-        if (TextUtils.isEmpty(id)) {
-            return;
-        }
-        switch (id) {
-            case ApiBt.UPDATE_PHONE_STATE:
-                String phoneStr = getPhoneStateString(params.getInt("value"));
-                binding.phoneState.setText(phoneStr);
-                break;
-        }
-    }
-
-    @Override
-    public boolean isUpdateOnUIThread() {
-        return true;
-    }
 }

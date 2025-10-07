@@ -23,8 +23,9 @@ public class CommonItemRecyclerViewAdapter<T> extends RecyclerView.Adapter<Commo
     private List<T> mItemList;
     private OnItemClickListener<T> onItemClickListener;
     private OnBindViewHolderListener<T> onBindViewHolderListener;
-    ///private String mDataType;
-    ///private FragmentItemBinding mFragmentItemBinding;
+
+    /// private String mDataType;
+    /// private FragmentItemBinding mFragmentItemBinding;
 
     public CommonItemRecyclerViewAdapter() {
     }
@@ -62,7 +63,8 @@ public class CommonItemRecyclerViewAdapter<T> extends RecyclerView.Adapter<Commo
     @Override
     public void onBindViewHolder(final ViewHolder<T> holder, int position) {
         holder.mItem = mItemList.get(position);
-        if (onBindViewHolderListener != null) onBindViewHolderListener.onBindViewHolder(holder, holder.mItem, position);
+        if (onBindViewHolderListener != null)
+            onBindViewHolderListener.onBindViewHolder(holder, holder.mItem, position);
         holder.mImageViewTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

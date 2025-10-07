@@ -3,8 +3,6 @@ package com.octopus.android.car.apps.equalizer;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.RemoteException;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -13,9 +11,6 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.car.api.ApiBt;
-import com.car.ipc.ICallback;
-import com.car.ipc.IRemote;
 import com.octopus.android.car.apps.R;
 import com.octopus.android.car.apps.bluetooth.bean.BTDevice;
 import com.octopus.android.car.apps.common.BaseViewBindingFragment;
@@ -30,7 +25,6 @@ import java.util.List;
 public class EqAdjustFragment extends BaseViewBindingFragment<FragmentEqAjustBinding> implements View.OnClickListener {
     private static final String ARG_COLUMN_COUNT = "column-count";
     private final String TAG = "EqAdjustFragment";
-    private EqAdjustAdapter eqAdjustAdapter;
     private GestureDetector gestureDetector;
     private float lastX, lastY;
 
@@ -76,7 +70,7 @@ public class EqAdjustFragment extends BaseViewBindingFragment<FragmentEqAjustBin
         list.add(new BTDevice());
         list.add(new BTDevice());
         list.add(new BTDevice());
-        eqAdjustAdapter = new EqAdjustAdapter(list, new EqAdjustAdapter.OnItemClickListener() {
+        EqAdjustAdapter eqAdjustAdapter = new EqAdjustAdapter(list, new EqAdjustAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position, BTDevice folderBean) {
 
@@ -149,32 +143,4 @@ public class EqAdjustFragment extends BaseViewBindingFragment<FragmentEqAjustBin
             binding.zoneIv.setVisibility(View.VISIBLE);
         }
     }
-
-    @Override
-    public void onConnected(IRemote iRemote, ICallback iCallback) throws RemoteException {
-        iRemote.register(new String[]{
-                //注册想要监听是数据，true代表马上返回需要的值
-                ApiBt.UPDATE_PHONE_STATE,//蓝牙状态
-        }, iCallback, true);
-    }
-
-
-    @Override
-    public void onUpdate(Bundle params) {
-        if (params == null) return;
-        String id = params.getString("id");
-        if (TextUtils.isEmpty(id)) {
-            return;
-        }
-        switch (id) {
-            case ApiBt.UPDATE_PHONE_STATE:
-                break;
-        }
-    }
-
-    @Override
-    public boolean isUpdateOnUIThread() {
-        return true;
-    }
-
 }

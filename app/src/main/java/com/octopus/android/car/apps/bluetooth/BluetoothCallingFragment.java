@@ -1,12 +1,7 @@
 package com.octopus.android.car.apps.bluetooth;
 
 import android.os.Bundle;
-import android.os.RemoteException;
-import android.util.Log;
 
-import com.car.api.ApiBt;
-import com.car.ipc.ICallback;
-import com.car.ipc.IRemote;
 import com.octopus.android.car.apps.common.BaseViewBindingFragment;
 import com.octopus.android.car.apps.databinding.FragmentCallingBinding;
 
@@ -43,36 +38,4 @@ public class BluetoothCallingFragment extends BaseViewBindingFragment<FragmentCa
         super.onFragmentVisible(isVisible);
     }
 
-    @Override
-    public void onConnected(IRemote iRemote, ICallback iCallback) throws RemoteException {
-        iRemote.register(new String[]{
-                //注册想要监听是数据，true代表马上返回需要的值
-                ApiBt.CMD_HANG,//挂断
-                ApiBt.CMD_LINK,//接听
-        }, iCallback, true);
-    }
-
-    @Override
-    public void onUpdate(Bundle params) {
-        if (binding == null) {
-            return;
-        }
-        if (params == null) return;
-        String id = params.getString("id");
-        if (id == null) return;
-        switch (id) {
-            case ApiBt.CMD_HANG:
-                //电话本信息
-                Log.d(TAG, "onUpdate: " + params.getString("value") + "   id: " + id);
-                break;
-            case ApiBt.CMD_LINK:
-                Log.d(TAG, "onUpdate: " + params.getString("value"));
-                break;
-        }
-    }
-
-    @Override
-    public boolean isUpdateOnUIThread() {
-        return true;
-    }
 }

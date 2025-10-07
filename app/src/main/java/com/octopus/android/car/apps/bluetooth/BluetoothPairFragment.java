@@ -2,16 +2,12 @@ package com.octopus.android.car.apps.bluetooth;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.os.RemoteException;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.car.api.ApiBt;
-import com.car.ipc.ICallback;
-import com.car.ipc.IRemote;
 import com.octopus.android.car.apps.bluetooth.adapter.BtPairAdapter;
 import com.octopus.android.car.apps.bluetooth.bean.BTDevice;
 import com.octopus.android.car.apps.common.BaseViewBindingFragment;
@@ -57,8 +53,6 @@ public class BluetoothPairFragment extends BaseViewBindingFragment<FragmentBluet
         binding.ivSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //                ApiBt.queryPair(); //搜索周围蓝牙设备
-                ApiBt.discover(1); //搜索周围蓝牙设备
             }
         });
         hashMap.clear();
@@ -68,11 +62,11 @@ public class BluetoothPairFragment extends BaseViewBindingFragment<FragmentBluet
         binding.ivDisconnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ApiBt.link(0);
-                ApiBt.btavLink(0);
+
             }
         });
         binding.ivDelete.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onClick(View v) {
                 List<BTDevice> list = btPairAdapter.getData();
@@ -97,49 +91,6 @@ public class BluetoothPairFragment extends BaseViewBindingFragment<FragmentBluet
         super.onFragmentVisible(isVisible);
     }
 
-    @Override
-    public void onConnected(IRemote iRemote, ICallback iCallback) throws RemoteException {
-        iRemote.register(new String[]{
-                //注册想要监听是数据，true代表马上返回需要的值
-                ApiBt.UPDATE_PHONE_STATE,//蓝牙状态
-                ApiBt.UPDATE_PAIR_LIST,//蓝牙列表
-                ApiBt.UPDATE_SEARCH_LIST,//搜索列表
-                ApiBt.UPDATE_PHONE_MAC_ADDR,//连接的mac
-        }, iCallback, true);
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    @Override
-    public void onUpdate(Bundle params) {
-        if (params == null) return;
-        if (binding == null) {
-            return;
-        }
-        String id = params.getString("id");
-        Log.d(TAG, "onUpdate:  " + id);
-        if (id != null) {
-            switch (id) {
-                case ApiBt.UPDATE_PHONE_STATE:
-                    //蓝牙连接状态
-                    //                    int value = params.getInt("value");
-                    //                    String phoneMacAddress = params.getString("phoneMacAddr");
-                    //                    String phoneName = params.getString("phoneName");
-                    break;
-                case ApiBt.UPDATE_PAIR_LIST:
-                    addDevice(params, true);
-                    break;
-                case ApiBt.UPDATE_SEARCH_LIST:
-                    addDevice(params, false);
-                    break;
-                case ApiBt.UPDATE_PHONE_MAC_ADDR:
-                    String macAddr = params.getString("value");
-                    btPairAdapter.setConnectMac(macAddr);
-                    binding.ivConnect.setSelected(!TextUtils.isEmpty(macAddr));
-                    break;
-            }
-        }
-    }
-
     private void addDevice(Bundle params, boolean isPairState) {
         String phoneMacAddress = params.getString("phoneMacAddr");
         String phoneName = params.getString("phoneName");
@@ -160,18 +111,12 @@ public class BluetoothPairFragment extends BaseViewBindingFragment<FragmentBluet
     }
 
     @Override
-    public boolean isUpdateOnUIThread() {
-        return true;
-    }
-
-    @Override
     public void onItemClick(int position, BTDevice folderBean) {
 
     }
 
     @Override
     public void onDeleteItem(BTDevice folderBean) {
-        hashMap.remove(folderBean.getDeviceMacAddress());
-        ApiBt.cmd(ApiBt.CMD_REMOVE_BOND, folderBean.getDeviceMacAddress());
+
     }
 }

@@ -25,7 +25,8 @@ public class MusicPlayingActivity extends BaseActivity implements PlayerCallback
     private TextView mTextViewTotalTime;
     private ImageView mImageViewPlayPause;
     private ActivityMusicPlayingBinding binding;
-    ///private OMedia oMedia;
+
+    /// private OMedia oMedia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

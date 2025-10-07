@@ -11,7 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.car.api.ApiBt;
 import com.octopus.android.car.apps.R;
 import com.octopus.android.car.apps.bluetooth.bean.BTDevice;
 import com.octopus.android.car.apps.databinding.ItemPairListBinding;
@@ -24,13 +23,14 @@ import java.util.List;
 public class BtPairAdapter extends RecyclerView.Adapter<BtPairAdapter.ViewHolder> {
 
     private List<BTDevice> mItemList;
-    private OnItemClickListener onItemClickListener;
+    private final OnItemClickListener onItemClickListener;
 
     public BtPairAdapter(List<BTDevice> items, OnItemClickListener listener) {
         this.mItemList = items;
         this.onItemClickListener = listener;
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setConnectMac(String mac) {
         int index = 0;
         for (int i = 0; i < mItemList.size(); i++) {
@@ -111,7 +111,6 @@ public class BtPairAdapter extends RecyclerView.Adapter<BtPairAdapter.ViewHolder
             @Override
             public void onClick(View v) {
                 //选中请求连接蓝牙
-                ApiBt.connectDevice(btDevice.getDeviceMacAddress());
             }
         });
     }
@@ -129,9 +128,9 @@ public class BtPairAdapter extends RecyclerView.Adapter<BtPairAdapter.ViewHolder
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public BTDevice mItem;
-        private TextView textView;
-        private ImageView imageView;
-        private ImageView delete_iv;
+        private final TextView textView;
+        private final ImageView imageView;
+        private final ImageView delete_iv;
 
         public ViewHolder(ItemPairListBinding binding) {
             super(binding.getRoot());

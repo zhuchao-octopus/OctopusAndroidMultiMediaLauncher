@@ -7,4 +7,11 @@
     <string name="tab_name_sd">SD</string>
     <string name="tab_name_folder">Folder</string>
     <string name="textview_default">........</string>
+    <string name="tv_timer_12_45">12:45</string>
+    <string name="tv_date_tue_oct_7">Tue, Oct 7</string>
+    <string name="tv_music">Music</string>
+    <string name="image_description">TODO</string>
+    <string name="tv_navigation">Navigation</string>
+    <string name="tv_apps">Apps</string>
+    <string name="cds_music">Music</string>
 </resources>

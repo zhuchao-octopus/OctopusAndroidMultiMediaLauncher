@@ -1,17 +1,12 @@
 package com.octopus.android.car.apps.bluetooth;
 
 import android.os.Bundle;
-import android.os.RemoteException;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.car.api.ApiBt;
-import com.car.ipc.ICallback;
-import com.car.ipc.IRemote;
-import com.octopus.android.car.apps.R;
 import com.octopus.android.car.apps.bluetooth.adapter.BtPhoneBookAdapter;
 import com.octopus.android.car.apps.bluetooth.bean.PhoneBookBean;
 import com.octopus.android.car.apps.common.BaseViewBindingFragment;
@@ -27,9 +22,9 @@ public class BluetoothPhoneLogFragment extends BaseViewBindingFragment<FragmentB
     private static final String ARG_COLUMN_COUNT = "column-count";
     private final String TAG = "BluetoothPhoneLogFragment";
     private BtPhoneBookAdapter btPhoneBookAdapter;
-    private List<PhoneBookBean> callIn = new ArrayList<>();
-    private List<PhoneBookBean> callOut = new ArrayList<>();
-    private List<PhoneBookBean> callMiss = new ArrayList<>();
+    private final List<PhoneBookBean> callIn = new ArrayList<>();
+    private final List<PhoneBookBean> callOut = new ArrayList<>();
+    private final List<PhoneBookBean> callMiss = new ArrayList<>();
     private int sPhoneState;
 
     public BluetoothPhoneLogFragment() {
@@ -69,41 +64,6 @@ public class BluetoothPhoneLogFragment extends BaseViewBindingFragment<FragmentB
         super.onFragmentVisible(isVisible);
     }
 
-    @Override
-    public void onConnected(IRemote iRemote, ICallback iCallback) throws RemoteException {
-        iRemote.register(new String[]{
-                //注册想要监听是数据，true代表马上返回需要的值
-                ApiBt.UPDATE_MISS_CALL_LOG,//未接电话
-                ApiBt.UPDATE_IN_CALL_LOG,//打入电话
-                ApiBt.UPDATE_OUT_CALL_LOG,//拨打电话
-                ApiBt.UPDATE_PHONE_STATE,//蓝牙状态
-        }, iCallback, true);
-    }
-
-    @Override
-    public void onUpdate(Bundle params) {
-        if (binding == null) {
-            return;
-        }
-        if (params == null) return;
-        String id = params.getString("id");
-        if (id == null) return;
-        switch (id) {
-            case ApiBt.UPDATE_IN_CALL_LOG:
-                updatePhone(params, 0);
-                break;
-            case ApiBt.UPDATE_OUT_CALL_LOG:
-                updatePhone(params, 1);
-                break;
-            case ApiBt.UPDATE_MISS_CALL_LOG:
-                updatePhone(params, 2);
-                break;
-            case ApiBt.UPDATE_PHONE_STATE:
-                sPhoneState = params.getInt("value");
-                break;
-        }
-    }
-
     /**
      * @param params 数据源
      * @param type   0 拨入 1 呼出 2未接
@@ -135,28 +95,7 @@ public class BluetoothPhoneLogFragment extends BaseViewBindingFragment<FragmentB
     }
 
     @Override
-    public boolean isUpdateOnUIThread() {
-        return true;
-    }
-
-    @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.ivInCallLog) {
-            btPhoneBookAdapter.setData(callIn);
-        } else if (v.getId() == R.id.ivOutCallLog) {
-            btPhoneBookAdapter.setData(callOut);
-        } else if (v.getId() == R.id.ivMissCallLog) {
-            btPhoneBookAdapter.setData(callMiss);
-        } else if (v.getId() == R.id.ivDelete) {
-            //删除记录
-            List<PhoneBookBean> bookBeanList = btPhoneBookAdapter.getBookDate();
-            if (!bookBeanList.isEmpty()) {
-                Log.d(TAG, "onClick: " + bookBeanList.size());
-                ApiBt.deleteContact(bookBeanList.get(0).getName(), bookBeanList.get(0).getNumber());
-                btPhoneBookAdapter.removeData(0);
-            }
-        }
 
     }
-
 }

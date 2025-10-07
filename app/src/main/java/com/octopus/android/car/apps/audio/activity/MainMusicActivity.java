@@ -60,7 +60,7 @@ public class MainMusicActivity extends BaseActivity implements View.OnClickListe
         binding.ivEq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openLocalActivity(EqualizerHomeActivity.class);
+                startLocalActivity(EqualizerHomeActivity.class);
             }
         });
 
