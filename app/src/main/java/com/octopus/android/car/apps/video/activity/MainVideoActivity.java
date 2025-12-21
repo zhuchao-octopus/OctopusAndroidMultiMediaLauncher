@@ -66,7 +66,7 @@ public class MainVideoActivity extends BaseActivity implements View.OnClickListe
         binding.tvSD.setOnClickListener(this);
         binding.tvFolder.setOnClickListener(this);
         binding.tvUSB.setOnClickListener(this);
-        binding.ivPlayList.callOnClick();
+        binding.tvUSB.callOnClick();
     }
 
     private void showFragment(Fragment fragment) {

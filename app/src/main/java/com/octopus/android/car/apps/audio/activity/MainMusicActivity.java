@@ -70,8 +70,6 @@ public class MainMusicActivity extends BaseActivity implements View.OnClickListe
         binding.tvFolder.setOnClickListener(this);
         binding.tvCollection.setOnClickListener(this);
 
-        binding.ivPlayList.callOnClick();
-
         List<BaseFragment> fragmentList = Arrays.asList(mPlayingItemFragment, mArtistsItemFragment, mAlbumsItemFragment, mFolderItemFragment, mCollectionItemFragment);
         MyFragmentAdapter fragmentAdapter = new MyFragmentAdapter(this, fragmentList);
         viewPager.setAdapter(fragmentAdapter);
@@ -99,6 +97,12 @@ public class MainMusicActivity extends BaseActivity implements View.OnClickListe
                 }
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        binding.tvArtists.callOnClick();
     }
 
     @SuppressLint("ResourceAsColor")

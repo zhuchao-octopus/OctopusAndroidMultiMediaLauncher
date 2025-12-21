@@ -35,9 +35,10 @@ import com.zhuchao.android.video.VideoList;
  * create an instance of this fragment.
  */
 public class ArtistsItemFragment extends BaseFragment implements CommonItemRecyclerViewAdapter.OnItemClickListener<Object>, CommonItemRecyclerViewAdapter.OnBindViewHolderListener<Object> {
+    private static final String TAG = "ArtistsItemFragment";
     public static final String ALBUM_TAG = "media.album.tag.";
     public static final String ARTIST_TAG = "media.artist.tag.";
-    private static final String TAG = "ArtistsItemFragment";
+
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -149,6 +150,7 @@ public class ArtistsItemFragment extends BaseFragment implements CommonItemRecyc
             VideoList videoList = Cabinet.getPlayManager().getAllMusic();
             mVideoList = videoList.getMusicByArtist(((MediaMetadata) obj).getArtist());
             mCommonItemRecyclerViewAdapter.setDataAndNotify(mVideoList.toList());
+            MMLog.d(TAG,"updateData AllMusic():"+ videoList.getCount());
         } else {
             mCommonItemRecyclerViewAdapter.setData(tTMediaMetadataManager.getTArtist());
             mCommonItemRecyclerViewAdapter.notifyDataSetChanged();

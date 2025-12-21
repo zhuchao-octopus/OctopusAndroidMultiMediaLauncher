@@ -2,7 +2,7 @@ package com.octopus.android.car.apps.common;
 
 import androidx.appcompat.app.AppCompatDelegate;
 
-import com.zhuchao.android.session.MApplication;
+import com.zhuchao.android.session.base.MApplication;
 
 public class MultimediaApplication extends MApplication {
 

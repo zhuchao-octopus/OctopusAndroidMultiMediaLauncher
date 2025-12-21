@@ -4,7 +4,6 @@ pluginManagement {
         mavenCentral()
         gradlePluginPortal()
         maven { url 'E:\\\\Android-Projects\\\\OpenAndroidFrameworkToolkitsLibs'}
-        //maven { url '\\\\192.168.10.93\\smb\\OctopusFrameworkLibs'}
         //maven { url 'https://gitee.com/zhuchao-octopus/OctopusFrameworkLibs/raw/master' }
     }
 }
@@ -14,7 +13,6 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven { url 'E:\\\\Android-Projects\\\\OpenAndroidFrameworkToolkitsLibs'}
-        //maven { url '\\\\192.168.10.93\\smb\\OctopusFrameworkLibs'}
         //maven { url 'https://gitee.com/zhuchao-octopus/OctopusFrameworkLibs/raw/master' }
     }
 }

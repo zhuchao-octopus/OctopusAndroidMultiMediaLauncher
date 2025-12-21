@@ -21,22 +21,29 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyCarApps"
         tools:targetApi="31">
-<!--        <activity-->
-<!--            android:name=".FullscreenMainActivity"-->
-<!--            android:configChanges="orientation|keyboardHidden|screenSize"-->
-<!--            android:exported="true"-->
-<!--            android:label="@string/title_activity_fullscreen_main"-->
-<!--            android:theme="@style/Theme.MyCarApps.Fullscreen">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+        <!--        <activity-->
+        <!--            android:name=".FullscreenMainActivity"-->
+        <!--            android:configChanges="orientation|keyboardHidden|screenSize"-->
+        <!--            android:exported="true"-->
+        <!--            android:label="@string/title_activity_fullscreen_main"-->
+        <!--            android:theme="@style/Theme.MyCarApps.Fullscreen">-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="android.intent.action.MAIN" />-->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
+        <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+        <!--            </intent-filter>-->
+        <!--        </activity>-->
+
         <activity
             android:name=".video.activity.MainVideoActivity"
             android:exported="false"
             android:taskAffinity="three.affinity" />
+        <activity
+            android:name=".video.activity.VideoPlayingActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="false"
+            android:label="@string/title_activity_video_playing"
+            android:theme="@style/Theme.MyCarApps.Fullscreen" />
 
         <activity-alias
             android:name=".MainVideoActivity"
@@ -52,14 +59,21 @@
         </activity-alias>
 
         <activity
+            android:name=".audio.activity.MainMusicActivity"
+            android:exported="true"
+            android:icon="@mipmap/ic_music_logo"
+            android:label="@string/title_activity_audio">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name=".audio.activity.MusicPlayingActivity"
             android:exported="false" />
-        <activity
-            android:name=".video.activity.VideoPlayingActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:exported="false"
-            android:label="@string/title_activity_video_playing"
-            android:theme="@style/Theme.MyCarApps.Fullscreen" />
+
         <activity
             android:name=".bluetooth.BluetoothHomeActivity"
             android:exported="false"
@@ -115,17 +129,7 @@
             </intent-filter>
         </activity-alias>
 
-        <activity
-            android:name=".audio.activity.MainMusicActivity"
-            android:exported="true"
-            android:icon="@mipmap/ic_music_logo"
-            android:label="@string/title_activity_audio">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>

@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.octopus.android.car.apps.R;
 import com.octopus.android.car.apps.audio.activity.MusicPlayingActivity;
 import com.octopus.android.car.apps.audio.adapter.PlayingListAdapter;
+import com.zhuchao.android.fbase.MMLog;
 import com.zhuchao.android.fbase.MessageEvent;
 import com.zhuchao.android.fbase.MethodThreadMode;
 import com.zhuchao.android.fbase.TCourierSubscribe;
@@ -117,9 +118,10 @@ public class PlayingItemFragment extends BaseFragment {
         mVideoList = Cabinet.getPlayManager().getPlayingHistoryList().getMusic();
         mPlayingListAdapter.setData(mVideoList.toOMediaList());
         mPlayingListAdapter.notifyDataSetChanged();
+
         checkIfEmpty();
     }
-
+    //数据源通知
     @TCourierSubscribe(threadMode = MethodThreadMode.threadMode.MAIN)
     public boolean onTCourierSubscribeEvent(EventCourierInterface eventCourierInterface) {
         switch (eventCourierInterface.getId()) { ///加载外部数据
