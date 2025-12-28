@@ -23,10 +23,12 @@ import com.zhuchao.android.fbase.TCourierSubscribe;
 import com.zhuchao.android.fbase.bean.MediaMetadata;
 import com.zhuchao.android.fbase.eventinterface.EventCourierInterface;
 import com.zhuchao.android.session.Cabinet;
-import com.zhuchao.android.session.TMediaMetadataManager;
+import com.zhuchao.android.session.TMediaMetaManager;
 import com.zhuchao.android.session.base.BaseFragment;
 import com.zhuchao.android.video.OMedia;
 import com.zhuchao.android.video.VideoList;
+
+import java.util.Collections;
 
 /**
  * A fragment representing a list of Items.
@@ -36,7 +38,7 @@ public class AlbumsItemFragment extends BaseFragment implements CommonItemRecycl
     public static final String ARTIST_TAG = "media.artist.tag.";
     private static final String TAG = "AlbumsItemFragment";
     private static final String ARG_COLUMN_COUNT = "column-count";
-    private final TMediaMetadataManager tTMediaMetadataManager = Cabinet.getPlayManager().getMediaMetadataManager();
+    private TMediaMetaManager tTMediaMetadataManager = null;
     private int mColumnCount = 1;
     private CommonItemRecyclerViewAdapter<Object> mCommonItemRecyclerViewAdapter;
     private RecyclerView mRecyclerView;
@@ -63,7 +65,7 @@ public class AlbumsItemFragment extends BaseFragment implements CommonItemRecycl
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        tTMediaMetadataManager = Cabinet.getPlayManager().getMediaMetadataManager();
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
@@ -89,7 +91,7 @@ public class AlbumsItemFragment extends BaseFragment implements CommonItemRecycl
         mCommonItemRecyclerViewAdapter = new CommonItemRecyclerViewAdapter<>();
         mCommonItemRecyclerViewAdapter.setOnItemClickListener(this);
         mCommonItemRecyclerViewAdapter.setOnBindViewHolderListener(this);
-        mCommonItemRecyclerViewAdapter.setData(tTMediaMetadataManager.getTAlbums());
+        mCommonItemRecyclerViewAdapter.setData(Collections.singletonList(tTMediaMetadataManager.getAlbums()));
         mRecyclerView.setAdapter(mCommonItemRecyclerViewAdapter);
         checkIfEmpty();
     }
@@ -145,7 +147,7 @@ public class AlbumsItemFragment extends BaseFragment implements CommonItemRecycl
             mVideoList = videoList.getMusicByAlbum(((MediaMetadata) obj).getAlbum());
             mCommonItemRecyclerViewAdapter.setDataAndNotify(mVideoList.toList());
         } else {
-            mCommonItemRecyclerViewAdapter.setData(tTMediaMetadataManager.getTAlbums());
+            mCommonItemRecyclerViewAdapter.setData(Collections.singletonList(tTMediaMetadataManager.getAlbums()));
             mCommonItemRecyclerViewAdapter.notifyDataSetChanged();
             checkIfEmpty();
         }

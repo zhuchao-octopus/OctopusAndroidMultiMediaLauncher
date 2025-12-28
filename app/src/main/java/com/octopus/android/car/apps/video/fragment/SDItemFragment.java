@@ -37,7 +37,7 @@ public class SDItemFragment extends BaseFragment {
     private OMediaItemRecyclerViewAdapter mOMediaItemRecyclerViewAdapter;
     private RecyclerView mRecyclerView;
     private TextView mEmptyView;
-    private VideoList mVideoList = Cabinet.getPlayManager().getLocalSDMediaVideos();
+    private VideoList mVideoList = null;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -59,7 +59,7 @@ public class SDItemFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        mVideoList = Cabinet.getPlayManager().getLocalSDMediaVideos();
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }

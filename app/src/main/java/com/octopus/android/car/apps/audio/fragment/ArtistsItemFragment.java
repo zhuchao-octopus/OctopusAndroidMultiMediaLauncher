@@ -24,10 +24,12 @@ import com.zhuchao.android.fbase.TCourierSubscribe;
 import com.zhuchao.android.fbase.bean.MediaMetadata;
 import com.zhuchao.android.fbase.eventinterface.EventCourierInterface;
 import com.zhuchao.android.session.Cabinet;
-import com.zhuchao.android.session.TMediaMetadataManager;
+import com.zhuchao.android.session.TMediaMetaManager;
 import com.zhuchao.android.session.base.BaseFragment;
 import com.zhuchao.android.video.OMedia;
 import com.zhuchao.android.video.VideoList;
+
+import java.util.Collections;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,7 +44,7 @@ public class ArtistsItemFragment extends BaseFragment implements CommonItemRecyc
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private final TMediaMetadataManager tTMediaMetadataManager = Cabinet.getPlayManager().getMediaMetadataManager();
+    private TMediaMetaManager tTMediaMetadataManager = null;
     private int mColumnCount = 1;
     private CommonItemRecyclerViewAdapter<Object> mCommonItemRecyclerViewAdapter;
     private RecyclerView mRecyclerView;
@@ -74,6 +76,7 @@ public class ArtistsItemFragment extends BaseFragment implements CommonItemRecyc
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        tTMediaMetadataManager = Cabinet.getPlayManager().getMediaMetadataManager();
     }
 
     @Override
@@ -88,7 +91,7 @@ public class ArtistsItemFragment extends BaseFragment implements CommonItemRecyc
             mRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
         }
         mCommonItemRecyclerViewAdapter = new CommonItemRecyclerViewAdapter<>();
-        mCommonItemRecyclerViewAdapter.setData(tTMediaMetadataManager.getTArtist());
+        mCommonItemRecyclerViewAdapter.setData(Collections.singletonList(tTMediaMetadataManager.getArtist()));
         mRecyclerView.setAdapter(mCommonItemRecyclerViewAdapter);
         checkIfEmpty();
         return view;
@@ -100,7 +103,7 @@ public class ArtistsItemFragment extends BaseFragment implements CommonItemRecyc
         mCommonItemRecyclerViewAdapter = new CommonItemRecyclerViewAdapter<>();
         mCommonItemRecyclerViewAdapter.setOnItemClickListener(this);
         mCommonItemRecyclerViewAdapter.setOnBindViewHolderListener(this);
-        mCommonItemRecyclerViewAdapter.setData(tTMediaMetadataManager.getTAlbums());
+        mCommonItemRecyclerViewAdapter.setData(Collections.singletonList(tTMediaMetadataManager.getAlbums()));
         mRecyclerView.setAdapter(mCommonItemRecyclerViewAdapter);
     }
 
@@ -152,7 +155,7 @@ public class ArtistsItemFragment extends BaseFragment implements CommonItemRecyc
             mCommonItemRecyclerViewAdapter.setDataAndNotify(mVideoList.toList());
             MMLog.d(TAG,"updateData AllMusic():"+ videoList.getCount());
         } else {
-            mCommonItemRecyclerViewAdapter.setData(tTMediaMetadataManager.getTArtist());
+            mCommonItemRecyclerViewAdapter.setData(Collections.singletonList(tTMediaMetadataManager.getArtist()));
             mCommonItemRecyclerViewAdapter.notifyDataSetChanged();
             checkIfEmpty();
         }

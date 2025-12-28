@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.octopus.android.car.apps.R;
 import com.octopus.android.car.apps.common.adapter.OMediaItemRecyclerViewAdapter;
 import com.octopus.android.car.apps.video.activity.VideoPlayingActivity;
+import com.zhuchao.android.fbase.MMLog;
 import com.zhuchao.android.fbase.MessageEvent;
 import com.zhuchao.android.fbase.MethodThreadMode;
 import com.zhuchao.android.fbase.TCourierSubscribe;
@@ -37,8 +38,8 @@ public class PlayingItemFragment extends BaseFragment {
     private OMediaItemRecyclerViewAdapter mOMediaItemRecyclerViewAdapter;
     private RecyclerView mRecyclerView;
     private TextView mEmptyView;
-    private VideoList mVideoList = Cabinet.getPlayManager().getPlayingHistoryList().getVideo();
-
+    private VideoList mVideoList = null;
+   private OMedia oMedia = new OMedia("/storage/A614F88614F85B2F/Movies/389.张目-Mercy.mp4");
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -59,7 +60,9 @@ public class PlayingItemFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        boolean isv = oMedia.isVideo();
+        MMLog.d(TAG, "oMedia.isVideo() = " + isv);
+        mVideoList = Cabinet.getPlayManager().getLocalMediaVideos().getVideo();
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
@@ -135,7 +138,7 @@ public class PlayingItemFragment extends BaseFragment {
 
     @SuppressLint("NotifyDataSetChanged")
     private void updateData(int dataId) {
-        mVideoList = Cabinet.getPlayManager().getPlayingHistoryList().getVideo();
+        mVideoList = Cabinet.getPlayManager().getLocalMediaVideos().getVideo();
         mOMediaItemRecyclerViewAdapter.setData(mVideoList.toOMediaList());
         mOMediaItemRecyclerViewAdapter.notifyDataSetChanged();
         checkIfEmpty();

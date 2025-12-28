@@ -38,7 +38,7 @@ public class PlayingItemFragment extends BaseFragment {
     private PlayingListAdapter mPlayingListAdapter;
     private RecyclerView mRecyclerView;
     private TextView mEmptyView;
-    private VideoList mVideoList = Cabinet.getPlayManager().getPlayingHistoryList().getMusic();
+    private VideoList   mVideoList =  Cabinet.getPlayManager().getLocalMediaAudios().getMusic();
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -60,7 +60,6 @@ public class PlayingItemFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
@@ -115,15 +114,16 @@ public class PlayingItemFragment extends BaseFragment {
 
     @SuppressLint("NotifyDataSetChanged")
     private void updateData(int dataId) {
-        mVideoList = Cabinet.getPlayManager().getPlayingHistoryList().getMusic();
+        mVideoList =  Cabinet.getPlayManager().getLocalMediaAudios().getMusic();
         mPlayingListAdapter.setData(mVideoList.toOMediaList());
         mPlayingListAdapter.notifyDataSetChanged();
-
+        MMLog.d(TAG,"updateData AllMusic():"+ mVideoList.getCount());
         checkIfEmpty();
     }
     //数据源通知
     @TCourierSubscribe(threadMode = MethodThreadMode.threadMode.MAIN)
     public boolean onTCourierSubscribeEvent(EventCourierInterface eventCourierInterface) {
+        MMLog.d(TAG,"updateData AllMusic():"+ mVideoList.getCount());
         switch (eventCourierInterface.getId()) { ///加载外部数据
             case MessageEvent.MESSAGE_EVENT_LOCAL_VIDEO:
             case MessageEvent.MESSAGE_EVENT_USB_VIDEO:
@@ -131,6 +131,7 @@ public class PlayingItemFragment extends BaseFragment {
             case MessageEvent.MESSAGE_EVENT_LOCAL_AUDIO:
             case MessageEvent.MESSAGE_EVENT_USB_AUDIO:
             case MessageEvent.MESSAGE_EVENT_SD_AUDIO:
+            case MessageEvent.MESSAGE_EVENT_SATA_AUDIO:
             case MessageEvent.MESSAGE_EVENT_MEDIA_LIBRARY:
             case MessageEvent.MESSAGE_EVENT_OCTOPUS_AIDL_START_REGISTER:
                 updateData(eventCourierInterface.getId());
